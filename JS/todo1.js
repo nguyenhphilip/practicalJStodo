@@ -1,8 +1,17 @@
-// Version 4//
 var todo = {
   todoList: [],
   displayTodo: function(){
-    console.log("My todos:",this.todoList);
+    if(this.todoList.length === 0){
+      console.log("Your todo list is empty!");
+    } else {
+    for(var i = 0; i < this.todoList.length; i++){
+      if(this.todoList[i].completed){
+      console.log("[x]", this.todoList[i].item);
+    } else {
+      console.log("[ ]", this.todoList[i].item);
+      }
+    };
+    }
   },
   addTodo: function(item){
     this.todoList.push({ // - todo items as objects - represent more data
