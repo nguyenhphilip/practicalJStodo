@@ -1,37 +1,24 @@
 var todo = { // create an object called todo
   todoList: [],
-  displayTodos: function(){
-    if(this.todoList.length === 0){
-      console.log("Your todo list is empty!");
-    } else {
-      for(var i = 0; i < this.todoList.length; i++){
-        if(this.todoList[i].completed){
-          console.log("Your todos:\n","[x]", this.todoList[i].todoText);
-        } else {
-          console.log("Your todos:\n","[ ]", this.todoList[i].todoText);
-        }
-    };
-    }
-  },
   addTodo: function(todoText){ // add each todoItem as an object within the todolist
     this.todoList.push({ // - todo items as objects - represent more data
       todoText: todoText,
       completed: false // - in this case whether or not the task was completed
     });
-    this.displayTodos();
+    view.displayTodos();
   },
   changeTodo: function(position, todoText){
     if (position > this.todoList.length | position < 0) {
       console.log("The list isn't that big yet. Try starting with ", this.todoList.length);
     } else {
     this.todoList[position].todoText = todoText; //accessing objects inside of objects
-    this.displayTodos();
+    view.displayTodos();
     }
   },
   toggleCompleted: function(position){
     var todo = this.todoList[position];
     todo.completed = !todo.completed;
-    this.displayTodos();
+    view.displayTodos();
   },
   toggleAll: function(){
     // if everything is true, mark false
@@ -53,24 +40,21 @@ var todo = { // create an object called todo
         this.todoList[j].completed = true;
       }
     };
-    this.displayTodos();
+    view.displayTodos();
   },
   deleteTodo: function(position, todoText){
     this.todoList.splice(position, 1);
-    this.displayTodos();
+    view.displayTodos();
   },
 }
 // HANDLERS
 
 let handlers = { // we want this object to house the methods that "handle" all the onclick events
-  displayTodos: function(){
-    todo.displayTodos();
-  },
   toggleAll: function(){
     todo.toggleAll();
   },
   addTodo: function(){
-    let addTodoTextInput = document.getElementById("addTodoTextInput")
+    let addTodoTextInput = document.getElementById("addTodoTextInput");
     todo.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = "";
   },
@@ -90,5 +74,23 @@ let handlers = { // we want this object to house the methods that "handle" all t
     let toggleCompletedPositionInput = document.getElementById("toggleCompletedPositionInput");
     todo.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
     toggleCompletedPositionInput.value = "";
+  }
+};
+
+let view = { // object responsible for what the user sees
+  displayTodos: function(){
+      let todosUl = document.querySelector("ul");
+      todosUl.innerHTML = '';
+
+      for(let i = 0; i < todo.todoList.length; i++){
+        let todoLi = document.createElement("li");
+        if(!todo.todoList[i].completed){
+          todoLi.innerHTML = "[ ] " + todo.todoList[i].todoText;
+          todosUl.appendChild(todoLi);
+        } else {
+          todoLi.innerHTML = "[X] " + todo.todoList[i].todoText;
+          todosUl.appendChild(todoLi);
+        }
+      }
   }
 };
