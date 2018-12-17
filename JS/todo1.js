@@ -6,15 +6,14 @@ var todo = { // create an object called todo
     } else {
       for(var i = 0; i < this.todoList.length; i++){
         if(this.todoList[i].completed){
-          console.log("[x]", this.todoList[i].todoText);
+          console.log("Your todos:\n","[x]", this.todoList[i].todoText);
         } else {
-          console.log("[ ]", this.todoList[i].todoText);
+          console.log("Your todos:\n","[ ]", this.todoList[i].todoText);
         }
     };
     }
   },
   addTodo: function(todoText){ // add each todoItem as an object within the todolist
-
     this.todoList.push({ // - todo items as objects - represent more data
       todoText: todoText,
       completed: false // - in this case whether or not the task was completed
@@ -61,17 +60,35 @@ var todo = { // create an object called todo
     this.displayTodos();
   },
 }
-// button functionality
+// HANDLERS
 
-const displayTodosButton = document.getElementById("displayTodosBtn");
-
-displayTodosButton.addEventListener('click', function(){
-  todo.displayTodos();
-});
-
-// 2. run displayTodo method when someone clicks the displayTodo button
-const toggleAllButton = document.getElementById("toggleAllBtn");
-
-toggleAllButton.addEventListener('click', function(){
-  todo.toggleAll();
-})
+let handlers = { // we want this object to house the methods that "handle" all the onclick events
+  displayTodos: function(){
+    todo.displayTodos();
+  },
+  toggleAll: function(){
+    todo.toggleAll();
+  },
+  addTodo: function(){
+    let addTodoTextInput = document.getElementById("addTodoTextInput")
+    todo.addTodo(addTodoTextInput.value);
+    addTodoTextInput.value = "";
+  },
+  changeTodo: function(){
+    let changeTodoTextInput = document.getElementById("changeTodoTextInput");
+    let changeTodoPositionInput = document.getElementById("changeTodoPositionInput");
+    todo.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
+    changeTodoTextInput.value = "";
+    changeTodoPositionInput.value = "";
+  },
+  deleteTodo: function(){
+    let deleteTodoPositionInput = document.getElementById("deleteTodoPositionInput");
+    todo.deleteTodo(deleteTodoPositionInput.valueAsNumber);
+    deleteTodoPositionInput.value = "";
+  },
+  toggleCompleted: function(){
+    let toggleCompletedPositionInput = document.getElementById("toggleCompletedPositionInput");
+    todo.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
+    toggleCompletedPositionInput.value = "";
+  }
+};

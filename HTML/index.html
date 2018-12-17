@@ -7,8 +7,29 @@
   </head>
   <body>
     <h1>Vanilla JS Todo List</h1>
-    <button type="button" name="displayTodo" id = "displayTodosBtn">Display Todo</button>
-    <button type="button" name="toggleAll" id = "toggleAllBtn">Toggle All</button>
+    <div class="">
+      <button type="button" name="displayTodo" onclick = "handlers.displayTodos()">Display Todos</button>
+      <button type="button" name="toggleAll" onclick = "handlers.toggleAll()">Toggle All</button>
+    </div>
+
+    <div class="">
+      <button type="button" name="addTodo" onclick = "handlers.addTodo()">Add Todo</button>
+      <input type="text" name="addText" value="" id = "addTodoTextInput">
+    </div>
+    <div class="">
+      <button type="button" name="changeTodo" onclick = "handlers.changeTodo()">Change Todo</button>
+      <input type="number" name="changeText" value="" id = "changeTodoPositionInput">
+      <input type="text" name="changeText" value="" id = "changeTodoTextInput">
+    </div>
+    <div class="">
+      <button type="button" name="deleteTodo" onclick = "handlers.deleteTodo()">Delete Todo</button>
+      <input type="number" name="deletePosition" value="" id = "deleteTodoPositionInput">
+    </div>
+    <div class="">
+      <button type="button" name="toggleCompleted" onclick = "handlers.toggleCompleted()">Toggle Todo</button>
+      <input type="number" name="toggleCompletedPosition" value="" id = "toggleCompletedPositionInput">
+    </div>
+
     <script src="../JS/todo1.js" charset="utf-8"></script>
   </body>
 </html>
