@@ -2,7 +2,7 @@ function runWithDebugger(func){
   debugger;
   func();
 }
-
+// TODO handles the creation and manipulation of data
 let todo = { // create an object called todo
   todoList: [],
   addTodo: function(todoText){ // add each todoItem as an object within the todolist
@@ -26,25 +26,22 @@ let todo = { // create an object called todo
     view.displayTodos();
   },
   toggleAll: function(){
-    // if everything is true, mark false
-    // otherwise mark true
-    let totalTodos = this.todoList.length; //length of the todoList
-    let completedTodos = 0; //create a counter
-    for (let i = 0; i < totalTodos; i++){ //loop through the todoList
-      if(this.todoList[i].completed){ // if the Todo is complete, then add 1 to the counter
+    let totalTodos = this.todoList.length;
+    let completedTodos = 0;
+
+    this.todoList.forEach(function(todoItem){ // calls our anon function for each todoItem in todoList
+      if(todoItem.completed){
         completedTodos++;
       }
-    }
+    });
 
-    if(totalTodos === completedTodos){ // now if the total number of todos is equal to completed
-      for(let i = 0; i < totalTodos; i++){ // meaning they are all complete,
-        this.todoList[i].completed = false; // make them all false
-      }
-    } else {
-      for(let j = 0; j < totalTodos; j++){ // otherwise, make them true
-        this.todoList[j].completed = true;
-      }
-    };
+    this.todoList.forEach(function(todoItem){
+      if(totalTodos === completedTodos){
+        todoItem.completed = false;
+      } else {
+        todoItem.completed = true;
+      };
+    });
     view.displayTodos();
   },
   deleteTodo: function(position){
@@ -52,7 +49,7 @@ let todo = { // create an object called todo
     view.displayTodos();
   },
 }
-// HANDLERS
+// HANDLERS - these handle the physical
 
 let handlers = { // we want this object to house the methods that "handle" all the onclick events
   toggleAll: function(){
@@ -84,21 +81,19 @@ let view = {
   displayTodos: function(){
     let todosUl = document.querySelector("ul");
     todosUl.innerHTML = '';
-    for(let i = 0; i < todo.todoList.length; i++){
+    todo.todoList.forEach(function(todoItem, position){
       let todoLi = document.createElement("li");
-      let todoList = todo.todoList[i];
-      let todoTextWithCompletion = '';
-
-      if(!todo.todoList[i].completed){
-        todoTextWithCompletion = "[ ]" + todoList.todoText;
+      let todoTextWithCompletion = "";
+      if(!todoItem.completed){
+        todoTextWithCompletion = "[ ]" + todoItem.todoText;
       } else {
-        todoTextWithCompletion = "[X]" + todoList.todoText;
+        todoTextWithCompletion = "[X]" + todoItem.todoText;
       }
-      todoLi.id = i;
+      todoLi.id = position;
       todoLi.innerHTML = todoTextWithCompletion;
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
-    }
+    }, this);
   },
   createDeleteButton: function(){
     let deleteButton = document.createElement("button");
